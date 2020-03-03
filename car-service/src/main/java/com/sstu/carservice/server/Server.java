@@ -35,6 +35,8 @@ public class Server {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+                out.write("PRIVET");
+
 
                 InputStream input = clientSocket.getInputStream();
                 DataInputStream dis = new DataInputStream(input);
