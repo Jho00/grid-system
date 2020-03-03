@@ -1,8 +1,6 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 tmp
-!**/src/main/**
-!**/src/test/**
 
 
 ### IntelliJ IDEA ###
