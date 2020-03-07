@@ -2,9 +2,9 @@ package broker.entity;
 
 import broker.entity.interfaces.Executable;
 
-public class Task implements Executable {
+public class Task implements Runnable {
     @Override
-    public boolean execute() {
-        return false;
+    public void run() {
+
     }
 }
