@@ -4,6 +4,7 @@ import broker.entity.interfaces.Executable;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,8 +18,12 @@ public class TaskQueueAction implements Runnable {
         pool = Executors.newCachedThreadPool();
     }
 
-    public void setTask(Runnable ex) {
-        tasks.add(ex);
+    public void setTask(Runnable task) {
+        tasks.add(task);
+    }
+
+    public void setTask(Iterable<Runnable> tasks) {
+        tasks.forEach(this::setTask);
     }
 
     @Override
