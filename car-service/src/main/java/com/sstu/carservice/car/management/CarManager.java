@@ -3,13 +3,14 @@ package com.sstu.carservice.car.management;
 import com.sstu.carservice.appconfig.ApplicationConfig;
 import com.sstu.carservice.car.Car;
 import com.sstu.carservice.car.CarStatus;
-import com.sstu.carservice.model.ConfigModel;
+import com.sstu.carservice.appconfig.ConfigModel;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,20 @@ public class CarManager {
         return cars.stream().filter(car -> car.getStatus().equals(CarStatus.ACTIVE)).collect(Collectors.toSet());
     }
 
+    @SneakyThrows
     public void checkCarsHealth() {
-        //need too implement
+        for (Car car : cars) {
+            URL address = new URL(car.getAddress());
+            try {
+                InetSocketAddress socketAddress = new InetSocketAddress(address.getHost(), address.getPort());
+                Socket socket = new Socket();
+                socket.connect(socketAddress, 1);
+                car.setStatus(CarStatus.ACTIVE);
+                socket.close();
+            } catch (Exception e) {
+                car.setStatus(CarStatus.INACTIVE);
+            }
+        }
+        log.info("car statuses - {}", cars);
     }
-
 }

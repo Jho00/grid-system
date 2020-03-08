@@ -1,4 +1,4 @@
-package com.sstu.carservice.model;
+package com.sstu.carservice.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

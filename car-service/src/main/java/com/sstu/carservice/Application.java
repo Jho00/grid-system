@@ -1,9 +1,9 @@
 package com.sstu.carservice;
 
 import com.sstu.carservice.appconfig.ApplicationConfig;
+import com.sstu.carservice.appconfig.ConfigModel;
 import com.sstu.carservice.car.management.CarScheduler;
 import com.sstu.carservice.handler.ServerHandler;
-import com.sstu.carservice.model.ConfigModel;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;

@@ -1,4 +1,4 @@
-package com.sstu.carservice.model;
+package com.sstu.carservice.appconfig;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,4 +12,5 @@ import java.util.List;
 public class ConfigModel {
     private String serverPort;
     private List<String> cars;
+    private String schedulerInterval;
 }

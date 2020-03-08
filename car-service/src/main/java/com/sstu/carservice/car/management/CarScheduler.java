@@ -1,5 +1,7 @@
 package com.sstu.carservice.car.management;
 
+import com.sstu.carservice.appconfig.ApplicationConfig;
+import com.sstu.carservice.appconfig.ConfigModel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
@@ -8,6 +10,7 @@ import org.quartz.*;
 public class CarScheduler implements Job {
 
     CarManager carManager = new CarManager();
+    ConfigModel configModel = ApplicationConfig.getConfig();
 
     @Getter
     JobDetail job = JobBuilder.newJob(CarScheduler.class)
@@ -19,7 +22,7 @@ public class CarScheduler implements Job {
             .withIdentity("healthCheckTrigger", "carService")
             .startNow()
             .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                    .withIntervalInSeconds(5)
+                    .withIntervalInSeconds(Integer.parseInt(configModel.getSchedulerInterval()))
                     .repeatForever())
             .forJob(job)
             .build();

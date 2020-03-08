@@ -1,8 +1,8 @@
 package com.sstu.carservice.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sstu.carservice.car.management.CarManager;
-import com.sstu.carservice.model.TaskModel;
+import com.sstu.carservice.task.TaskModel;
+import com.sstu.carservice.task.distribution.TaskDistributor;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -15,8 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     ObjectMapper objectMapper = new ObjectMapper();
-
-    CarManager carManager = new CarManager();
+    TaskDistributor taskDistributor = new TaskDistributor();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -26,9 +25,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("Server received: " + received);
 
         TaskModel taskModel = objectMapper.readValue(received, TaskModel.class);
+        log.info("Task received - {}", taskModel);
 
-        log.info(taskModel.toString());
-        carManager.initCars();
+        taskDistributor.accept(taskModel);
+
 
         ctx.write(Unpooled.copiedBuffer("Hello " + received, CharsetUtil.UTF_8));
     }
