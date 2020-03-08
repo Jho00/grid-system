@@ -7,10 +7,7 @@ import com.sstu.carservice.model.ConfigModel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 public class CarManager {
@@ -26,6 +23,10 @@ public class CarManager {
             cars.add(new Car(UUID.randomUUID(), address, CarStatus.UNDEFINED));
         }
         log.info("Initialized cars - {}", cars);
+    }
+
+    public Optional<Car> getAvailableCar() {
+        return cars.stream().filter(car -> car.getStatus().equals(CarStatus.ACTIVE)).findFirst();
     }
 
 
