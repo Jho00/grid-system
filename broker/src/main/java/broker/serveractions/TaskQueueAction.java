@@ -1,10 +1,7 @@
 package broker.serveractions;
 
-import broker.entity.interfaces.Executable;
-
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,10 +26,25 @@ public class TaskQueueAction implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if (!tasks.isEmpty()) {
-                Runnable task = tasks.poll();
-                pool.submit(task);
+            if (tasks.isEmpty()) {
+                return;
             }
+            Runnable task = tasks.poll();
+            pool.submit(task);
         }
+    }
+
+    public static TaskQueueAction makeTaskQueue(Iterable<Runnable> tasks) {
+        TaskQueueAction queue = new TaskQueueAction();
+        queue.setTask(tasks);
+
+        return queue;
+    }
+
+    public static TaskQueueAction makeTaskQueue(Runnable task) {
+        TaskQueueAction queue = new TaskQueueAction();
+        queue.setTask(task);
+
+        return queue;
     }
 }
