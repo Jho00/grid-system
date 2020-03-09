@@ -1,9 +1,12 @@
-package com.sstu.carservice.car.management;
+package com.sstu.carservice.car.scheduling;
 
 import com.sstu.carservice.appconfig.ApplicationConfig;
 import com.sstu.carservice.appconfig.ConfigModel;
+
+import com.sstu.carservice.car.management.CarManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+
 import org.quartz.*;
 
 @Slf4j

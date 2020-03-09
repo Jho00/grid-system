@@ -1,6 +1,10 @@
+serverHost: localhost
 serverPort: 9999
 
-cars:
+brokerHost: localhost
+brokerPort: 8888
+
+carAddresses:
   - http://localhost:8080
   - http://localhost:8081
   - http://localhost:8082

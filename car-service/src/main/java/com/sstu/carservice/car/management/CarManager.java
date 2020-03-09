@@ -1,9 +1,11 @@
 package com.sstu.carservice.car.management;
 
 import com.sstu.carservice.appconfig.ApplicationConfig;
+import com.sstu.carservice.appconfig.ConfigModel;
 import com.sstu.carservice.car.Car;
 import com.sstu.carservice.car.CarStatus;
-import com.sstu.carservice.appconfig.ConfigModel;
+import com.sstu.carservice.task.ConnectionTask;
+
 import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,20 +13,22 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
-import java.util.*;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class CarManager {
 
-    private ConfigModel configModel = ApplicationConfig.getConfig();
-    private List<String> addresses = configModel.getCars();
-
     @Getter
     private static Set<Car> cars = new HashSet<>();
+    private ConfigModel configModel = ApplicationConfig.getConfig();
 
     public void initCars() {
-        for (String address : addresses) {
+        for (String address : configModel.getCarAddresses()) {
             cars.add(new Car(UUID.randomUUID(), address, CarStatus.UNDEFINED));
         }
         log.info("Initialized cars - {}", cars);
@@ -53,5 +57,28 @@ public class CarManager {
             }
         }
         log.info("car statuses - {}", cars);
+    }
+
+    public void connect(ConnectionTask connectionTask) {
+        String address = getCarAddress(connectionTask);
+        Car car = new Car(UUID.randomUUID(), address, CarStatus.REGISTERED);
+        cars.add(car);
+        log.info("Car - {} successfully registered.", car);
+    }
+
+    public void disconnect(ConnectionTask connectionTask) {
+        String address = getCarAddress(connectionTask);
+        boolean removed = cars.removeIf(car -> car.getAddress().equals(address));
+        if (removed) {
+            log.info("Car with address - {} successfully deleted.", address);
+        } else {
+            log.info("Car with address - {} not found.", address);
+        }
+    }
+
+    private String getCarAddress(ConnectionTask connectionTask) {
+        String host = connectionTask.getPayload().getHost();
+        String port = connectionTask.getPayload().getPort();
+        return "http://" + host + ":" + port;
     }
 }

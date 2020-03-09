@@ -10,7 +10,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ConfigModel {
+    private String serverHost;
     private String serverPort;
-    private List<String> cars;
+
+    private String brokerHost;
+    private String brokerPort;
+
+    private List<String> carAddresses;
+
     private String schedulerInterval;
 }
