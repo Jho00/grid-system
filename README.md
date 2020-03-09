@@ -2,7 +2,7 @@
 
 CONTRACTS
 
-
+```
 {
   "action": "connect",
   "payload": {
@@ -27,3 +27,4 @@ CONTRACTS
     "port": <number>
   }
 }
+```
