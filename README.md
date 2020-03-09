@@ -28,3 +28,13 @@ CONTRACTS
   }
 }
 ```
+
+
+RESPONSES
+
+```
+{
+  "status": <"ok" | "fail">,
+  "result": <string>
+}
+```
