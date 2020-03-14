@@ -7,6 +7,7 @@ import broker.config.AppConfig;
 import broker.config.ConfigModel;
 import broker.entity.netinteraction.Action;
 import broker.entity.netinteraction.Payload;
+import broker.services.QueueService;
 import broker.services.TCPService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -30,7 +31,6 @@ public class Task implements Runnable {
     @Setter
     private ConfigModel configModel = AppConfig.getConfig();
 
-
     @JsonProperty("action")
     private String action;
     @JsonProperty("payload")
@@ -53,7 +53,7 @@ public class Task implements Runnable {
                 this.sendResponse(response.toString());
             }
 
-//            TODO:  Add to queue Again
+            QueueService.getInstance().addTask(this); // Should test
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             response =  new Response(MessageStatuses.FAIL, "Error: " + e.getMessage());
