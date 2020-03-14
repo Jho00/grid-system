@@ -20,28 +20,25 @@ import java.io.IOException;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Payload.class, name = "payload")
 })
 public class Task implements Runnable {
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    @Setter @Getter
-    private String action;
-    @Setter @Getter @JsonProperty("payload")
-    private Payload payload;
-
-    private ConfigModel configModel;
-
     @Setter
     private ChannelHandlerContext ctx;
+    @Setter
+    private ConfigModel configModel = AppConfig.getConfig();
 
-    public Task() {
-        configModel = AppConfig.getConfig();
-    }
+
+    @JsonProperty("action")
+    private String action;
+    @JsonProperty("payload")
+    public Payload payload;
 
     @Override
     public void run() {
+        ObjectMapper objectMapper = new ObjectMapper();
         TCPService service = new TCPService(configModel.getPeerHost(), Integer.parseInt(configModel.getPeerPort()));
         Response response;
         try {
@@ -50,12 +47,13 @@ public class Task implements Runnable {
 
             try {
                 response = objectMapper.readValue(result, Response.class);
+                this.sendResponse(response.toString());
             } catch (IOException e) {
                 response =  new Response(MessageStatuses.FAIL, "Cannot parse response from client.");
                 this.sendResponse(response.toString());
             }
 
-            //TODO:  Add to queue Again
+//            TODO:  Add to queue Again
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             response =  new Response(MessageStatuses.FAIL, "Error: " + e.getMessage());
