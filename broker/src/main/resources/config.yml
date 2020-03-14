@@ -1,1 +1,7 @@
-serverPort: 9999
+serverPort: 5050
+
+serverHost: 127.0.0.1
+
+peerHost: 127.0.0.1
+
+peerPort: 9999

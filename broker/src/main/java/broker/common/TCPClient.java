@@ -18,7 +18,7 @@ public class TCPClient {
         return this.sendMessage(msg, true);
     }
 
-    protected String sendMessage(String msg, boolean withLogs) throws IOException, InterruptedException {
+    protected String sendMessage(String msg, boolean withLogs) throws IOException {
         if(withLogs) {
             out.println(msg);
         }
@@ -26,7 +26,7 @@ public class TCPClient {
         return in.readLine();
     }
 
-    protected void stopConnection() throws IOException, InterruptedException {
+    protected void stopConnection() throws IOException {
         if (!clientSocket.isInputShutdown()) {
             clientSocket.shutdownInput();
         }
