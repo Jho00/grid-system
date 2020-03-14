@@ -27,7 +27,7 @@ public class Main {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(group);
             serverBootstrap.channel(NioServerSocketChannel.class);
-            serverBootstrap.localAddress(new InetSocketAddress("localhost", Integer.parseInt(configModel.getServerPort())));
+            serverBootstrap.localAddress(new InetSocketAddress(configModel.getServerHost(), Integer.parseInt(configModel.getServerPort())));
 
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 protected void initChannel(SocketChannel socketChannel) throws Exception {

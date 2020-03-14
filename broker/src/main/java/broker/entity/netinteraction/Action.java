@@ -1,5 +1,10 @@
 package broker.entity.netinteraction;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
 public class Action {
     private String actionName;
     private Payload payload;

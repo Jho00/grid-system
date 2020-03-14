@@ -11,4 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ConfigModel {
     private String serverPort;
+    private String serverHost;
+
+    private String peerPort;
+    private String peerHost;
 }
