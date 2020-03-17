@@ -1,0 +1,17 @@
+{
+  "name": "computing-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build & node dist/server.js & node dist/client.js",
+    "build": "babel --presets es2015 -d dist/ src"
+  },
+  "author": "NesQ1k",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}

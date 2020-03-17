@@ -1,1 +1,3 @@
 .idea/
+/computing-node/node_modules/
+/computing-node/dist
