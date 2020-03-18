@@ -1,0 +1,1 @@
+console.log('There app will be started');
