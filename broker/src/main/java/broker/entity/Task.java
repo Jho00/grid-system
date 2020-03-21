@@ -47,13 +47,16 @@ public class Task implements Runnable {
 
             try {
                 response = objectMapper.readValue(result, Response.class);
-                this.sendResponse(response.toString());
+                if (response.getStatus().equals(MessageStatuses.FAIL)){
+                    QueueService.getInstance().addTask(this); // Should tes
+                } else {
+                    this.sendResponse(response.toString());
+                }
             } catch (IOException e) {
                 response =  new Response(MessageStatuses.FAIL, "Cannot parse response from client.");
                 this.sendResponse(response.toString());
             }
 
-            QueueService.getInstance().addTask(this); // Should test
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             response =  new Response(MessageStatuses.FAIL, "Error: " + e.getMessage());

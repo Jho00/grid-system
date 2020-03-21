@@ -44,7 +44,7 @@ public class TaskDistributor {
             URL address = new URL(car.getAddress());
             InetSocketAddress socketAddress = new InetSocketAddress(address.getHost(), address.getPort());
             Socket socket = new Socket();
-            socket.connect(socketAddress, 1);
+            socket.connect(socketAddress);
 
             car.setStatus(CarStatus.BUSY);
 

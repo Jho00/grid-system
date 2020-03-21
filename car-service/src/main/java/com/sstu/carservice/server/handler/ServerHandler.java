@@ -23,14 +23,8 @@ import io.netty.util.CharsetUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.DataOutputStream;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-
 @Slf4j
 public class ServerHandler extends ChannelInboundHandlerAdapter {
-
-    private final ConfigModel configModel = ApplicationConfig.getConfig();
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final TaskDistributor taskDistributor = new TaskDistributor();
@@ -43,9 +37,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf inBuffer = (ByteBuf) msg;
-
         String received = inBuffer.toString(CharsetUtil.UTF_8);
-        System.out.println("Server received: " + received);
+        log.info("Server received raw data - {}", received);
 
         Object task;
         try {
@@ -71,17 +64,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         } else if (task instanceof ExecuteTask) {
             ExecuteTask executeTask = (ExecuteTask) task;
             ResponseModel response = executeTaskRequestHandler.handle(executeTask);
-
             String responseJson = objectMapper.writeValueAsString(response);
-
-            InetSocketAddress socketAddress = new InetSocketAddress(configModel.getBrokerHost(),
-                    Integer.parseInt(configModel.getBrokerPort()));
-            Socket socket = new Socket();
-            socket.connect(socketAddress, 1);
-
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeUTF(responseJson);
-            dataOutputStream.flush();
+            ctx.writeAndFlush(Unpooled.copiedBuffer(responseJson, CharsetUtil.UTF_8));
         }
     }
 
