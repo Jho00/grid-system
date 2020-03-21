@@ -7,8 +7,8 @@ import path from 'path';
 const app = express();
 const corsOptions = {
   origin: '*',
-}
-const upload = multer({ dest: 'dist/' });
+};
+const upload = multer({ dest: 'upload/' });
 
 app.use(express.urlencoded({ extended: true }))
 app.use(cors(corsOptions));
@@ -19,7 +19,7 @@ app.post('/file', upload.single('matrix'), (req, res) => {
   fs.readFile(filePath, (err, data) => {
     let result: string[][] = [];
     const array = data.toString().split('\r\n');
-    for(let i in array) {
+    for (let i in array) {
       result.push(array[i].split(' '));
     }
     console.log(result);
