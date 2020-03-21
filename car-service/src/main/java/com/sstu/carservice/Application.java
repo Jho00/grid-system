@@ -19,8 +19,6 @@ import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 
-import java.io.IOException;
-
 import java.net.InetSocketAddress;
 
 public class Application {
@@ -29,7 +27,7 @@ public class Application {
     private static CarManager carManager = new CarManager();
     private static CarScheduler carScheduler = new CarScheduler();
 
-    public static void main(String[] args) throws IOException, InterruptedException, SchedulerException {
+    public static void main(String[] args) throws InterruptedException, SchedulerException {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
         Scheduler scheduler = schedulerFactory.getScheduler();
         scheduler.scheduleJob(carScheduler.getJob(), carScheduler.getTrigger());

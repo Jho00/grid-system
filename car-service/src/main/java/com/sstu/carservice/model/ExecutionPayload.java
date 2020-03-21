@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class ExecutionPayload {
     private String toExecute;
+    private String data;
 }

@@ -35,7 +35,7 @@ public class CarManager {
     }
 
     public Optional<Car> getAvailableCar() {
-        return cars.stream().filter(car -> car.getStatus().equals(CarStatus.ACTIVE)).findFirst();
+        return cars.stream().filter(car -> car.getStatus().equals(CarStatus.ACTIVE)).findAny();
     }
 
     public Set<Car> getAllAvailableCars() {
@@ -77,7 +77,7 @@ public class CarManager {
     }
 
     private String getCarAddress(ConnectionTask connectionTask) {
-        String host = connectionTask.getPayload().getHost();
+        String host = connectionTask.getPayload().getAddress();
         String port = connectionTask.getPayload().getPort();
         return "http://" + host + ":" + port;
     }

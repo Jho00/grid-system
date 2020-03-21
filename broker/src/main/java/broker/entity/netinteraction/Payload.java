@@ -1,20 +1,21 @@
 package broker.entity.netinteraction;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+
+@Getter
+@Setter
 public class Payload {
     private String toExecute;
+    private String data;
 
-    public String getToExecute() {
-        return toExecute;
-    }
-
-    public void setToExecute(String toExecute) {
-        this.toExecute = toExecute;
-    }
-
+    @SneakyThrows
     @Override
     public String toString() {
-        return "{" +
-                "\"toExecute\":\"" + toExecute + "\"" +
-                '}';
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(this);
     }
 }

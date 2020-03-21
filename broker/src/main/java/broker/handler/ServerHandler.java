@@ -21,7 +21,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf inBuffer = (ByteBuf) msg;
 
         String received = inBuffer.toString(CharsetUtil.UTF_8);
-        System.out.println("Server received: " + received);
+        System.out.println("Server received raw data: " + received);
 
         Task task;
 
@@ -32,7 +32,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             QueueService.getInstance().addTask(task);
         } catch (UnrecognizedPropertyException exception) {
             System.out.println(exception.getMessage());
-            Response response = new Response(MessageStatuses.FAIL, "Cannot parse request");
+            Response response = objectMapper.readValue(received, Response.class);
             ctx.write(Unpooled.copiedBuffer(response.toString(), CharsetUtil.UTF_8));
             return;
         }
@@ -41,7 +41,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             return;
         }
 
-        Response response = new Response(MessageStatuses.FAIL, "Unknow action: " + task.getAction());
+        Response response = new Response(MessageStatuses.FAIL, "Unknown action: " + task.getAction());
         ctx.write(Unpooled.copiedBuffer(response.toString(), CharsetUtil.UTF_8));
     }
 

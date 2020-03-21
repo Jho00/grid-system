@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ConnectionPayload {
-    private String host;
+    private String address;
     private String port;
 }
