@@ -1,5 +1,13 @@
 # grid-system
 
+COMPUTING NODE
+
+```
+1. cd computing-node
+2. npm run build
+3. npm run start
+```
+
 CONTRACTS
 
 ```
