@@ -1,3 +1,9 @@
+/**
+ * Просто генерим все перестановки заданных велечин
+ * На массив [1,2] мы получим ['1,2', '2,1]
+ * @param initialSet
+ * @param withCommas
+ */
 const makeAllPermutations = (initialSet: Array<number>, withCommas: boolean = true): Array<string> => {
     function permNxt(ar, lf) {
         let rt = ar.length - 1, i = rt - 1;

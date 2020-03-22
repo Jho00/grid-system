@@ -1,7 +1,9 @@
 import CountPathResult from "../types/CountPathResult";
 
 /**
- * Function will be make string and send to grid-layer. We should not use imports
+ * Эта функция будет превращена в текст и передана грид-слою, тут нам не нужны импорт
+ * Функция считает минимальный путь с заданным началом и свободными вершинами
+ * Например если у нас 4 вершины, мы передали начало пути как 1,2, то будут посчитаны пути 1,2,3,4 и 1,2,4,3
  * @param matrix
  * @param fixedHead
  * @param tailVertex
