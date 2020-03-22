@@ -1,10 +1,11 @@
 import FunctionToStringUtils from "../distribution/function-to-string/FunctionToStringUtils";
+import InitialData from "../types/InitialData";
 
 class Task {
     private toExecute: string;
-    private initialData: Object;
+    private initialData: InitialData;
 
-    constructor(data: Object) {
+    constructor(data: InitialData) {
         this.initialData = data;
         this.toExecute = this.getTaskTemplate();
     }
@@ -22,6 +23,17 @@ class Task {
 
     public getToExecute(): string {
         return this.toExecute;
+    }
+    public getInitialData(): InitialData {
+        return this.initialData;
+    }
+
+
+    public toJson(): string {
+        return JSON.stringify({
+            initialData: this.initialData,
+            toExecute: this.toExecute
+        })
     }
 }
 
