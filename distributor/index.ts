@@ -4,6 +4,9 @@ import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
 import countPathValue from "./app/distribution/countPathValue";
+import CountPathResult from "./app/types/CountPathResult";
+import countAllPathWithSwimmingTailAndReturnMax from "./app/distribution/countAllPathWithSwimmingTailAndReturnMax";
+import Task from "./app/entity/Task";
 
 // const app = express();
 // const corsOptions = {
@@ -32,13 +35,29 @@ import countPathValue from "./app/distribution/countPathValue";
 // app.listen(3000, () => console.log('Example app listening on port 3000!'));
 
 
-const example = '0,1,3,4';
+/*const example = '0,1,3,4';
 const matrix = [
-    [0,40,-1,-1,18],
+    [0,40,Infinity,Infinity,18],
     [40,0,22,6,15],
-    [-1,22,0,14,-1],
-    [-1,6,14,0,20],
-    [18,15,-1,20,0],
+    [Infinity,22,0,14,Infinity],
+    [Infinity,6,14,0,20],
+    [18,15,Infinity,20,0],
+];*/
+
+const matrix = [
+    [0,5,11,9],
+    [10,0,8,7],
+    [7,14,0,8],
+    [12,6,15,0],
 ];
 
-console.log(countPathValue(matrix, example));
+const initialData = {
+    matrix: matrix,
+    fixedHead: '0',
+    vertexTail: [1,2,3]
+};
+
+const task = new Task(initialData);
+
+// console.log(task.getToExecute());
+console.log(eval(task.getToExecute()));
