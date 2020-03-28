@@ -1,16 +1,33 @@
 import TaskGenerator from "../TaskGenerator";
+import net from "net";
 
 const sendMatrixToGrid = async (matrix: number[][]) => {
-    const gen = TaskGenerator(matrix);
+    const client = new net.Socket();
 
-    while (true) {
-        const value = gen.next().value;
-        if (!value) {
-            break;
-        }
-        console.log(value.getInitialData());
-        // TODO: make send to grid
-    }
+    const port = 5050;
+    const host = '192.168.1.70';
+    // const gen = TaskGenerator(matrix);
+
+    console.log('try to connect');
+    client.connect(port, host, () => {
+        const gen = TaskGenerator(matrix);
+            setTimeout(() => {
+                const value = gen.next().value;
+                if (!value) {
+                }
+                client.write(value.toJson())
+            }, 3000);
+        });
+
+
+    client.on('data', function(data) {
+        console.log('Received: ' + data);
+    });
+
+    client.on('close', function() {
+        console.log('Connection closed');
+    });
+
 };
 
 

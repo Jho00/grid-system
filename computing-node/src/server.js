@@ -7,16 +7,25 @@ runClient();
 
 const server = net.createServer((socket) => {
   socket.on('data', function(data){
-    const command = JSON.parse(data.toString());
+    console.log(data);
+    let dataStr = data.toString();
+    const newStrt = dataStr.substring(0, dataStr.length);
+
+    console.log(newStrt);
+    const command = JSON.parse(newStrt);
+    console.log(command);
+
     if (command.action == 'task') {
-      const initialData = command.payload.initialData;
+      const initialData = JSON.parse(command.payload.data);
       const result = eval(command.payload.toExecute);
-      socket.write(JSON.stringify(
+      const resultJson = JSON.stringify(
         {
           status: 'ok',
-          result: result.toString(),
+          result: JSON.stringify(result),
         }
-      ));
+      );
+      console.log(resultJson);
+      socket.write(resultJson);
     }
   })
 

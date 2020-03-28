@@ -3,10 +3,10 @@ import InitialData from "../types/InitialData";
 
 class Task {
     private toExecute: string;
-    private initialData: InitialData;
+    private data: InitialData;
 
     constructor(data: InitialData) {
-        this.initialData = data;
+        this.data = data;
         this.toExecute = this.getTaskTemplate();
     }
 
@@ -25,20 +25,20 @@ class Task {
         return this.toExecute;
     }
     public getInitialData(): InitialData {
-        return this.initialData;
+        return this.data;
     }
 
 
     public toJson(): string {
         return JSON.stringify({
-            initialData: this.initialData,
-            toExecute: this.toExecute
+            data: JSON.stringify(this.data),
+            toExecute: `${this.toExecute}`
         })
     }
 }
 
-const headTemplate = "(() => {\n";
-const tailTemplate = "\n})()";
+const headTemplate = '(() => { ';
+const tailTemplate = ' })()';
 
 const taskExecuteTemplate = 'return countAllPathWithSwimmingTailAndReturnMax(initialData.matrix, initialData.fixedHead, initialData.vertexTail)';
 

@@ -7,15 +7,15 @@ class FunctionToStringUtils {
     }
 
     public static makeAllPermutation(): string {
-        return 'const makeAllPermutations = ' + makeAllPermutations.toString() + ';\n';
+        return 'const makeAllPermutations = ' + makeAllPermutations.toString() + ';\n ';
     }
 
     public static countPathValue(): string {
-        return 'const countPathValue = ' + countPathValue.toString() + ';\n';
+        return 'const countPathValue = ' + countPathValue.toString() + ';\n ';
     }
 
     public static countAllPathWithSwimmingTailAndReturnMax(): string {
-        return 'const countAllPathWithSwimmingTailAndReturnMax = ' + countAllPathWithSwimmingTailAndReturnMax.toString() + ';\n';
+        return 'const countAllPathWithSwimmingTailAndReturnMax = ' + countAllPathWithSwimmingTailAndReturnMax.toString() + ';\n ';
     }
 }
 
