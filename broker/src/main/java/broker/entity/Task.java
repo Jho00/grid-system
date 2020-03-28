@@ -44,6 +44,7 @@ public class Task implements Runnable {
         try {
             Action action = new Action(RequestActions.TASK, payload);
             String result = service.sendCommand(action);
+            System.out.println("RESULT: " + result);
 
             try {
                 response = objectMapper.readValue(result, Response.class);
@@ -65,6 +66,6 @@ public class Task implements Runnable {
     }
 
     private void sendResponse(String response) {
-        ctx.write(Unpooled.copiedBuffer(response, CharsetUtil.UTF_8));
+        ctx.writeAndFlush(Unpooled.copiedBuffer(response, CharsetUtil.UTF_8));
     }
 }

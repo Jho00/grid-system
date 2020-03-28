@@ -4,7 +4,7 @@ export const CONFIG = {
     port: 8080,
   },
   CLIENT: {
-    address: '192.168.1.66',
+    address: '192.168.1.70',
     port: 8000,
   }
 }

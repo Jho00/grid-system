@@ -1,7 +1,7 @@
 serverPort: 5050
 
-serverHost: 127.0.0.1
+serverHost: 192.168.1.70
 
-peerHost: 127.0.0.1
+peerHost: 192.168.1.72
 
-peerPort: 9999
+peerPort: 8080
