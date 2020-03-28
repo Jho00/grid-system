@@ -7,17 +7,14 @@ import com.sstu.carservice.car.Car;
 import com.sstu.carservice.car.CarStatus;
 import com.sstu.carservice.car.management.CarManager;
 import com.sstu.carservice.model.ResponseModel;
+import com.sstu.carservice.server.handler.TCPService;
 import com.sstu.carservice.task.ExecuteTask;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.URL;
 
 import java.util.Optional;
@@ -41,20 +38,13 @@ public class TaskDistributor {
                 log.info("Error while mapping object to json", e);
                 return new ResponseModel("fail", "Cannot parse task from broker.");
             }
+
             URL address = new URL(car.getAddress());
-            InetSocketAddress socketAddress = new InetSocketAddress(address.getHost(), address.getPort());
-            Socket socket = new Socket();
-            socket.connect(socketAddress);
+            TCPService tcpService = new TCPService(address.getHost(), address.getPort());
 
             car.setStatus(CarStatus.BUSY);
-
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            dataOutputStream.writeUTF(data);
-            dataOutputStream.flush();
-
-            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-            String inputData = dataInputStream.readUTF();
-            socket.close();
+            String inputData = tcpService.sendCommand(data);
+            log.info("input FROM MASHINA - {}", inputData);
 
             ResponseModel response;
             try {
