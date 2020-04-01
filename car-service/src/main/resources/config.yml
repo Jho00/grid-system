@@ -1,4 +1,4 @@
-serverHost: 192.168.1.72
+serverHost: 192.168.1.66
 serverPort: 8080
 
 brokerHost: 127.0.0.1

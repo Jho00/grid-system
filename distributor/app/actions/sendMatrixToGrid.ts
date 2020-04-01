@@ -11,7 +11,7 @@ const sendMatrixToGrid = async (matrix: number[][]) => {
     console.log('try to connect');
     client.connect(port, host, () => {
         const gen = TaskGenerator(matrix);
-            setTimeout(() => {
+            setInterval(() => {
                 const value = gen.next().value;
                 if (!value) {
                     console.log('fuck');

@@ -14,6 +14,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.Delimiters;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -33,7 +35,7 @@ public class Application {
         scheduler.scheduleJob(carScheduler.getJob(), carScheduler.getTrigger());
         scheduler.start();
 
-        carManager.initCars();
+//        carManager.initCars();
 
         EventLoopGroup group = new NioEventLoopGroup();
         try {
@@ -45,6 +47,7 @@ public class Application {
 
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
+                    socketChannel.pipeline().addLast("frameDecoder", new DelimiterBasedFrameDecoder(5000, Delimiters.lineDelimiter()));
                     socketChannel.pipeline().addLast(new ServerHandler());
                 }
             });

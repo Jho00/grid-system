@@ -41,7 +41,7 @@ function runClient() {
   console.log('try to connect');
   client.connect(CONFIG.PEER.port, CONFIG.PEER.address, () => {
     console.log('connected');
-    client.write(JSON.stringify(
+    const command = JSON.stringify(
       {
         action: 'connect',
         payload: {
@@ -49,6 +49,9 @@ function runClient() {
           port: CONFIG.CLIENT.port,
         }
       }
-    ));
+    );
+    console.log(command);
+    client.write(command + "\n");
+
   });
 }
