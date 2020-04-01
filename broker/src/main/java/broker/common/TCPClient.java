@@ -20,7 +20,7 @@ public class TCPClient {
 
     protected String sendMessage(String msg, boolean withLogs) throws IOException {
         if(withLogs) {
-            out.println(msg);
+            out.println(msg + "\n");
         }
         clientSocket.shutdownOutput();
         return in.readLine();
