@@ -30,10 +30,14 @@ class Task {
 
 
     public toJson(): string {
-        return JSON.stringify({
-            data: JSON.stringify(this.data),
-            toExecute: `${this.toExecute}`
-        })
+        const obj = {
+            action: 'task',
+            payload: {
+                data: JSON.stringify(this.data),
+                toExecute: `${this.toExecute}`
+            }
+        }
+        return JSON.stringify(obj)
     }
 }
 

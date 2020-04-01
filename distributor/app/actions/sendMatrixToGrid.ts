@@ -14,8 +14,9 @@ const sendMatrixToGrid = async (matrix: number[][]) => {
             setTimeout(() => {
                 const value = gen.next().value;
                 if (!value) {
+                    console.log('fuck');
                 }
-                client.write(value.toJson())
+                client.write(value.toJson() + "\n")
             }, 3000);
         });
 
