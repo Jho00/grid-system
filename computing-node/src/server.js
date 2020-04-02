@@ -25,7 +25,7 @@ const server = net.createServer((socket) => {
         }
       );
       console.log(resultJson);
-      socket.write(resultJson);
+      socket.write(resultJson + "\n");
     }
   })
 

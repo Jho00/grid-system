@@ -66,7 +66,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             ResponseModel response = executeTaskRequestHandler.handle(executeTask);
             String responseJson = objectMapper.writeValueAsString(response);
             log.info("OTVET OT MASHINI - {}", responseJson);
-            ctx.writeAndFlush(Unpooled.copiedBuffer(responseJson, CharsetUtil.UTF_8));
+            ctx.writeAndFlush(Unpooled.copiedBuffer(responseJson + "\n", CharsetUtil.UTF_8));
         }
     }
 
