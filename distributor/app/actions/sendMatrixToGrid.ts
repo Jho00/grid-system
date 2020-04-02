@@ -13,7 +13,7 @@ const sendMatrixToGrid = async (matrix: number[][]) => {
     let tasksReceived = 0;
     let sentAllTasks = false;
 
-    const result = new ResultCalculateService();
+    const result = ResultCalculateService.getInstance();
 
     const calculateResult = setInterval(() => {
         if (sentAllTasks && tasksSent === tasksReceived) {
