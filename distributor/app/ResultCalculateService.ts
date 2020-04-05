@@ -54,7 +54,9 @@ class ResultCalculateService {
     }
 
     public getResult(): CountPathResult {
-        return this._best;
+        const result =  this._best;
+        this._isHaveResult = false;
+        return result;
     }
 }
 

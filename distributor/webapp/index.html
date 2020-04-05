@@ -7,13 +7,35 @@
   <title>Document</title>
 </head>
 <body>
-  <input type="file" id="file">
-  <button id="upload">Send</button>
+  <header>
+    <h1>100% решение задачи коммивояжера</h1>
+  </header>
+  <main>
+    <div class="control-panel">
+      <input type="file" id="file">
+      <button id="upload">Решить</button>
+    </div>
+    <div class="loader hidden">
+      <span>
+        Загрузка
+      </span>
+      <div class="square"></div>
+    </div>
+  </main>
   
   <script>
     let interval = null;
-    document.getElementById("upload").addEventListener("click", () => {
-      const file = document.getElementById("file").files[0];
+    const uploadForm = document.getElementById("upload");
+    const fileElem = document.getElementById("file");
+    const loader = document.querySelector('.loader');
+    const panel = document.querySelector('.control-panel');
+
+    uploadForm.addEventListener("click", () => {
+      const file = fileElem.files[0];
+      if (!file) {
+        alert('Выберете файл!');
+        return;
+      }
       const formData = new FormData();
 
       formData.append("matrix", file);
@@ -21,7 +43,10 @@
         method: "POST",
         body: formData
       });
+      fileElem.value = null;
       interval = setInterval(tryGetResult, 2000);
+      toggleLoaderVisible();
+      toggleControlPanelVisible();
     });
 
 
@@ -29,7 +54,7 @@
       fetch("http://localhost:3000/result", {
         method: "GET"
       }).then((response) => response.json()).then((data) => {
-        if (data.status == 'ok') {
+        if (data.status === 'ok') {
           handleResult(data.result)
         }
       });
@@ -37,6 +62,24 @@
 
     function handleResult(result) {
       clearInterval(interval)
+      toggleLoaderVisible()
+      toggleControlPanelVisible()
+
+      setTimeout(() => {
+        alert(`Result: ${result.result} with way ${result.permutation}`)
+      }, 10)
+    }
+
+    function toggleLoaderVisible() {
+      toggleElement(loader)
+    }
+
+    function toggleControlPanelVisible() {
+      toggleElement(panel)
+    }
+
+    function toggleElement(element, force_status = null) {
+      element.classList.toggle("hidden");
     }
   </script>
 </body>

@@ -11,7 +11,6 @@ const corsOptions = {
     origin: '*',
 };
 const upload = multer({dest: 'dist/'});
-let sendFake = false;
 app.use(express.urlencoded({extended: true}))
 app.use(cors(corsOptions));
 
@@ -35,10 +34,7 @@ app.post('/file', upload.single('matrix'), (req, res) => {
         }
 
         // @ts-ignore
-        // sendMatrixToGrid(result);
-        setTimeout(() => {
-            sendFake = true;
-        }, 10000)
+        sendMatrixToGrid(result);
         res.sendStatus(200);
     });
 });
@@ -52,16 +48,6 @@ app.get('/result', (req, res) => {
        res.send(JSON.stringify({
            status: false
        }));
-   }
-
-   if (sendFake) {
-       res.send(JSON.stringify({
-           status: 'ok',
-           result: {
-               permutation: '0,1,2,3',
-               result: 33
-           }
-       }))
    }
 
    res.send(JSON.stringify({
